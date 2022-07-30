@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="GPL-3.0"
+[[mods]]
+modId="gw"
+version="${file.jarVersion}"
+displayName="Gun Works"
+logoFile="gw.png"
+credits=""
+authors="Love, Goulixiaoji of Nova Committee"
+description='''
+'''
+
+[[dependencies.gw]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.gw]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"

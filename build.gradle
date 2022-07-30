@@ -1,0 +1,116 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0'
+group = 'committee.nova.shooter'
+archivesBaseName = 'shooter'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+minecraft {
+    mappings channel: 'official', version: '1.16.5'
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
+
+            mods {
+                shooter {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.disableRefMap', 'true'
+
+            mods {
+                shooter {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'shooter', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                shooter {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven {
+        url = "https://www.cursemaven.com"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+
+    implementation fg.deobf('curse.maven:obfuscate-289380:3740120')
+    implementation fg.deobf('curse.maven:mrcrayfishs-gun-mod-289479:3830458')
+    //runtimeOnly fg.deobf('curse.maven:configured-457570:3780620')
+    //runtimeOnly fg.deobf('curse.maven:catalogue-459701:3780550')
+    //runtimeOnly fg.deobf('curse.maven:jei-238222:3681294')
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "Shooter",
+            "Specification-Vendor": "Goulixiaoji",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "-forge" + "-1.16.5" + "${version}",
+            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
