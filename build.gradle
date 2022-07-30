@@ -81,9 +81,9 @@ dependencies {
 
     implementation fg.deobf('curse.maven:obfuscate-289380:3740120')
     implementation fg.deobf('curse.maven:mrcrayfishs-gun-mod-289479:3830458')
-    //runtimeOnly fg.deobf('curse.maven:configured-457570:3780620')
-    //runtimeOnly fg.deobf('curse.maven:catalogue-459701:3780550')
-    //runtimeOnly fg.deobf('curse.maven:jei-238222:3681294')
+    runtimeOnly fg.deobf('curse.maven:configured-457570:3780620')
+    runtimeOnly fg.deobf('curse.maven:catalogue-459701:3780550')
+    runtimeOnly fg.deobf('curse.maven:jei-238222:3681294')
 }
 
 jar {
